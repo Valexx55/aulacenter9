@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flow xmlns="http://www.springframework.org/schema/webflow"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/webflow
+http://www.springframework.org/schema/webflow/spring-webflow-2.4.xsd">
+
+	<!-- <var name="respuestaBean" class="com.jcg.examples.bean.Respuesta" /> -->
+	
+	<var name="informaBean" class="com.jcg.examples.bean.InformaBean" />
+	<input name="acum" required="true"/>
+	
+	<on-start>
+	<set name="informaBean.nveces_total" value="acum"></set>
+	<evaluate expression="informaBean.informaInicio()"></evaluate></on-start>
+	<view-state id="p1">
+		<on-entry>
+			<evaluate expression="informaBean.incnveces()" result="flowScope.veces"></evaluate>
+			<evaluate expression="informaBean.incnvecestotal()"></evaluate>
+		</on-entry>
+		
+		<transition on="ap2" to="p2" />
+		<transition on="ap3" to="p3" />
+	</view-state>
+	<view-state id="p2">
+		<on-entry>
+			<evaluate expression="informaBean.incnveces()" result="flowScope.veces"></evaluate>
+			<evaluate expression="informaBean.incnvecestotal()"></evaluate>
+		</on-entry>
+		<transition on="ap4" to="p3" />
+	</view-state>
+	<view-state id="p3">
+		<on-entry>
+			<evaluate expression="informaBean.incnveces()" result="flowScope.veces"></evaluate>
+			<evaluate expression="informaBean.incnvecestotal()"></evaluate>
+		</on-entry>
+		<transition on="ap4" to="p4" />
+	</view-state>
+	<end-state id="p4"><output name="acum" value="informaBean.nveces_total"/></end-state>
+	<on-end><evaluate expression="informaBean.informaFin()"></evaluate></on-end>
+</flow>
